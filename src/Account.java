@@ -13,9 +13,9 @@ public abstract class Account implements Comparable <Account> {
     private String login;
     private final String mail;
 
-    public Account (String login, String mail){
+    public Account (String mail){
             this.Id = ++counter;
-            this.login = login;
+            this.login = mail;
             this.mail = mail;
     }
 
@@ -52,7 +52,7 @@ public abstract class Account implements Comparable <Account> {
 
     @Override
     public String toString() {
-        return "User id: " + getId() +", Name: " + getLogin() + ", mail: " + getMail();
+        return this.getClass().getSimpleName() + " id: " + getId() +", Name: " + getLogin() + ", mail: " + getMail();
     }
 
 

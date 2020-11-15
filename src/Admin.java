@@ -1,9 +1,9 @@
-public class Admin extends Account{
-    public Admin(String login, String mail){
-        super(login, mail);
+public final class Admin extends Account{
+    public Admin(String mail){
+        super(mail);
     }
 
     public void loadTestCategories(){
-        AuctionEngine.loadTestCategories(this);
+//        AuctionEngine.loadTestCategories(this);
     }
 }

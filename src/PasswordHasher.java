@@ -4,7 +4,7 @@ import java.security.NoSuchAlgorithmException;
 import java.security.spec.InvalidKeySpecException;
 import java.security.spec.KeySpec;
 
-public class PasswordHasher {
+public final class PasswordHasher {
 
     public static byte[] passwordHash(String password){
 
