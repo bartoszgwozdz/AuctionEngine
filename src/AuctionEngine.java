@@ -4,49 +4,56 @@ import java.util.stream.Collectors;
 
 public class AuctionEngine {
 
-    private static Scanner scanner = new Scanner(System.in);
     private final static List<Auction> auctions = new ArrayList<>();
     private final static List<Category> categories = new ArrayList<>();
     private final static Map<String, Category> categoriesByNames = new HashMap<>();
 
 
+    public static List<Category> getCategories (){
+        return Collections.unmodifiableList(categories);
+    }
+
+    public static Category getCategory(String wantedName){
+        return categoriesByNames.getOrDefault(wantedName, null);
+    }
+
     public static boolean createCategory(String name){
         if(categoryExists(name)){
-
+            return false;
         }
+        Category newCategory = new Category(name);
+        return addCategory(newCategory);
     }
 
-    public static boolean categoryExists(String wantedName){
-        if(categoriesByNames.containsKey(wantedName)){
-            return true;
-        }
-        return false;
+    private static boolean categoryExists(String wantedName){
+        return categoriesByNames.containsKey(wantedName);
     }
 
 
-    public static boolean addCategory(Category category){
+    private static boolean addCategory(Category category){
         if(category == null) {
             return false;
         }
         categories.add(category);
+        categoriesByNames.put(category.getName(), category);
         return true;
     }
 
 
+
+
     public static boolean addAuction (Auction auction){
-        if(auction == null) return false;
-        if(auctionExists(auction)) return false;
+        if(auction == null) {
+            return false;
+        }
+        if(auctionExists(auction)) {
+            return false;
+        }
         auctions.add(auction);
         System.out.println("Auction added successfully to system.");
         return true;
     }
-    public static Category getCategory(String wantedName){
-        if(categoryExists(wantedName)){
-            return categoriesByNames.get(wantedName);
-        }
-        else
-            return null;
-    }
+
 
 
     public static boolean auctionExists(Auction auction){
@@ -79,7 +86,7 @@ public class AuctionEngine {
 
 
 
-    public static void loadTestCategories(Admin admin) {
+    public static void loadTestCategories() {
 
     }
 

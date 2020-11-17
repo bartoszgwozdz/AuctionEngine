@@ -8,42 +8,44 @@ public class Auction {
     private static int counter=0;
     private final int auctionNr;
     private final User seller;
+    private Category category;
     private String title;
     private double price;
-    private double fee;
-    private LocalDateTime startDateTime;
-    private long  durationInDays;
-    private LocalDateTime expirationDateTime;
     private String description;
-    private Category category;
+    private long  durationInDays;
+    private LocalDateTime startDateTime;
+    private LocalDateTime expirationDateTime;
     private FeeCalculateStrategy feeCalculator;
+    private double fee;
 
 
 
     private Auction (Builder builder){
         auctionNr = counter ++;
         seller = builder.seller;
+        category = builder.category;
         title = builder.title;
         price = builder.price;
-        fee = builder.fee;
+        description = builder.description;
         startDateTime = builder.startDateTime;
         durationInDays = builder.durationInDays;
         expirationDateTime = builder.expirationDateTime;
+        fee = builder.fee;
 
     }
 
     public static class Builder{
 
+        private User seller;
+        private Category category;
         private String title;
         private double price;
+        private String description;
+        private long  durationInDays;
+        private LocalDateTime startDateTime;
+        private LocalDateTime expirationDateTime;
         private FeeCalculateStrategy feeCalculator;
         private double fee;
-        private LocalDateTime startDateTime;
-        private long  durationInDays;
-        private LocalDateTime expirationDateTime;
-        private String description;
-        private Category category;
-        private User seller;
 
         public Auction build(){
 
