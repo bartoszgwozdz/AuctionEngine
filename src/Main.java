@@ -16,21 +16,20 @@ public class Main {
         LoginPanel userLoginPanel = new LoginPanel(userLoginEngine);
         LoginPanel adminLoginPanel = new LoginPanel(adminLoginEngine);
 
-        loadTestData(userCreationPanel);
-        loadTestData(adminCreationPanel);
+        loadTestAccounts(userCreationPanel);
+        loadTestAccounts(adminCreationPanel);
         userLoginEngine.showAccounts();
         adminLoginEngine.showAccounts();
-//        Account account = userLoginPanel.login();
-//        System.out.println(account);
 
-//        adminCreationPanel.createAccount();
-        Admin admin = adminLoginPanel.login();
-        System.out.println(admin);
+//        Admin admin = adminLoginPanel.login();
+//        System.out.println(admin);
 
+        AuctionEngine.loadTestCategories();
+        CategoriesBrowser.viewCategories(CategoriesBrowser.byName());
 
     }
 
-    public static void loadTestData(AccountCreationPanel creationPanel) {
+    public static void loadTestAccounts(AccountCreationPanel creationPanel) {
         creationPanel.createAccount("qwe@o2.pl", "Zaq12wsx");
         creationPanel.createAccount("qwe@o2.pl", "Zaq12wsx");
         creationPanel.createAccount("asd@o2.pl", "Zaq12wsx");

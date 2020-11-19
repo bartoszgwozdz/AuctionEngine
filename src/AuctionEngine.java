@@ -1,8 +1,9 @@
 import java.util.*;
 import java.util.function.Function;
 import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
-public class AuctionEngine {
+public abstract class AuctionEngine {
 
     private final static List<Auction> auctions = new ArrayList<>();
     private final static List<Category> categories = new ArrayList<>();
@@ -29,7 +30,6 @@ public class AuctionEngine {
         return categoriesByNames.containsKey(wantedName);
     }
 
-
     private static boolean addCategory(Category category){
         if(category == null) {
             return false;
@@ -39,8 +39,9 @@ public class AuctionEngine {
         return true;
     }
 
-
-
+    public static List<Auction> getAuctions(){
+        return Collections.unmodifiableList(auctions);
+    }
 
     public static boolean addAuction (Auction auction){
         if(auction == null) {
@@ -54,22 +55,9 @@ public class AuctionEngine {
         return true;
     }
 
-
-
     public static boolean auctionExists(Auction auction){
         return auctions.contains(auction);
     }
-
-
-
-
-    Function<List<Category>, List<String>> categoriesByName = listOfCategories -> {
-                return listOfCategories.stream()
-                        .map(Category::getName)
-                        .collect(Collectors.toList());
-            };
-
-
 
     public static void showAuctions(){
         for(Auction auction: auctions){
@@ -87,7 +75,9 @@ public class AuctionEngine {
 
 
     public static void loadTestCategories() {
-
+        Stream<String> strings = Stream.of("Cars", "Motorcycles", "Scooters", "Bikes", "Boats", "Trucks", "Planes" );
+        strings.distinct()
+                .forEach(s->createCategory(s));
     }
 
 //    public static void loadTestAuctions(){

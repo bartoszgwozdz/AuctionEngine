@@ -3,8 +3,7 @@ import java.time.format.DateTimeFormatter;
 import java.time.format.FormatStyle;
 import java.util.*;
 
-public class Auction {
-
+public class Auction implements Comparable<Auction>{
     private static int counter=0;
     private final int auctionNr;
     private final User seller;
@@ -17,8 +16,6 @@ public class Auction {
     private LocalDateTime expirationDateTime;
     private FeeCalculateStrategy feeCalculator;
     private double fee;
-
-
 
     private Auction (Builder builder){
         auctionNr = counter ++;
@@ -35,7 +32,6 @@ public class Auction {
     }
 
     public static class Builder{
-
         private User seller;
         private Category category;
         private String title;
@@ -48,7 +44,6 @@ public class Auction {
         private double fee;
 
         public Auction build(){
-
             this.startDateTime = LocalDateTime.now();
             this.expirationDateTime = expirationCalculator(this.startDateTime, this.durationInDays);
             this.feeCalculator = chooseFeeCalculator(this.durationInDays);
@@ -93,22 +88,17 @@ public class Auction {
         }
     }
 
-
-    //  Here is our fee strategy chooser
-
+    //  Here is fee strategy chooser
     private static FeeCalculateStrategy chooseFeeCalculator (long durationInDays) {
         if(durationInDays == 1) return new OneDayFee();
         if(durationInDays > 1 && durationInDays <=3) return new ThreeDayFee();
         else return new SevenDayFee();
     }
 
-
     private static LocalDateTime expirationCalculator (LocalDateTime dateTime, long durationInDays){
         LocalDateTime expirationDate = dateTime.plusDays(durationInDays);
         return expirationDate;
     }
-
-
 
     public int getAuctionNr() {
         return Integer.valueOf(auctionNr);
@@ -116,6 +106,10 @@ public class Auction {
 
     public String getTitle() {
         return title;
+    }
+
+    public double getPrice() {
+        return price;
     }
 
     public LocalDateTime getStartDateTime() {
@@ -130,7 +124,23 @@ public class Auction {
         return category;
     }
 
+    public static Comparator<Auction> compareByDateNewestOnTop = new Comparator<Auction>() {
+        @Override
+        public int compare(Auction auction1, Auction auction2) {
+            double auction1Price = auction1.getPrice();
+            double auction2Price = auction2.getPrice();
+            return (int)(auction1Price - auction2Price);
+        }
+    };
 
+    public static Comparator<Auction> compareByDateOldestOnTop = new Comparator<Auction>() {
+        @Override
+        public int compare(Auction auction1, Auction auction2) {
+            double auction1Price = auction1.getPrice();
+            double auction2Price = auction2.getPrice();
+            return (int)(auction2Price - auction1Price);
+        }
+    };
 
 
     @Override
@@ -150,5 +160,9 @@ public class Auction {
     @Override
     public int hashCode() {
         return Objects.hash(auctionNr);
+    }
+    @Override
+    public int compareTo(Auction o) {
+        return this.title.compareTo(o.title);
     }
 }
